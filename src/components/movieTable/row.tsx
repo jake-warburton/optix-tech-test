@@ -1,3 +1,5 @@
+import { TableCell, TableRow } from "@mui/material";
+
 import { Movie } from "src/commonInterfaces";
 
 interface RowProps {
@@ -11,10 +13,10 @@ const Row: React.FC<RowProps> = ({ movie }) => {
   ).toFixed(1);
 
   return (
-    <div key={`movie-row-${movie.id}`}>
-      <p>{movie.title}</p>
-      <p>{averageScore}</p>
-    </div>
+    <TableRow key={`movie-row-${movie.id}`}>
+      <TableCell>{movie.title}</TableCell>
+      <TableCell>{averageScore}</TableCell>
+    </TableRow>
   );
 };
 

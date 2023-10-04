@@ -1,10 +1,13 @@
-interface ButtonProps {
-  children: any;
-  onClick: React.MouseEventHandler<HTMLButtonElement>;
-}
+import { Button as MUIButton, ButtonProps } from "@mui/material";
 
-const Button: React.FC<ButtonProps> = ({ children, onClick }) => (
-  <button onClick={onClick}>{children}</button>
+const Button: React.FC<ButtonProps> = ({
+  children,
+  onClick,
+  variant = "contained",
+}) => (
+  <MUIButton variant={variant} onClick={onClick}>
+    {children}
+  </MUIButton>
 );
 
 export default Button;

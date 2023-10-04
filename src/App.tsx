@@ -1,8 +1,10 @@
 import { useRef, useState, Children } from "react";
 import { easeIn, easeOut } from "polished";
 import { useBoolean } from "react-use";
-import { createReducer } from "@reduxjs/toolkit";
 
+import { Container } from "@mui/material";
+
+import Button from "./components/button";
 import Table from "./components/movieTable/table";
 
 // TODO: use https://comforting-starlight-f3456a.netlify.app/.netlify/functions/movieCompanies
@@ -29,21 +31,23 @@ const mockMovieData: any = [
 ];
 
 export const App = () => {
-  const refreshButton = (buttonText: any) => {
-    if (mockMovieCompanyData) {
-      return <button>{buttonText}</button>;
-    } else {
-      return <p>No movies loaded yet</p>;
-    }
-  };
-
   //  Accumulate movies here and append filmCompanyName with find
 
   return (
     <div>
-      <h2>Welcome to Movie database!</h2>
-      {refreshButton("Refresh")}
-      <Table movies={mockMovieData} />
+      <Container maxWidth="lg">
+        <h2>Welcome to Movie database!</h2>
+
+        <div style={{}}>
+          <Button
+            variant="contained"
+            onClick={() => alert("refresh movies and companies")}
+          >
+            Refresh
+          </Button>
+        </div>
+        <Table movies={mockMovieData} loadingState="success" />
+      </Container>
 
       {/*
       <div>

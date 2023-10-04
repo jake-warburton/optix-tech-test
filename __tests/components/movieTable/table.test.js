@@ -2,9 +2,11 @@
  * @jest-environment jsdom
  */
 
+import React from "react";
 import { render } from "@testing-library/react";
 
 import Table from "../../../src/components/movieTable/table";
+import { FETCH_MOVIES } from "../../../src/constants";
 
 const mockMovies = [
   {
@@ -41,25 +43,40 @@ describe("when passed an array of movies", () => {
     const movieTable = queryByTestId("movie-table");
 
     expect(movieTable).toBeTruthy();
-    expect(movieTable.children.length).toEqual(mockMovies.length);
+    expect(movieTable.childNodes.length).toEqual(mockMovies.length);
   });
 
-  /*
   it("Displays a loading state while waiting for movies to return from the API", () => {
-    //  mock api call to be in progress and check if child within table has loading test id
-    expect(1 + 1).toEqual(3);
+    const { queryByTestId } = render(
+      <Table movies={[]} loadingState="loading" />
+    );
+
+    const loadingIcon = queryByTestId("loading-icon");
+
+    expect(loadingIcon).toBeTruthy();
   });
 
   it("Displays an error message if no movies were returned from a completed API call", () => {
-    //  mock api call to return an empty array
-    expect(1 + 1).toEqual(3);
+    const { queryByTestId } = render(
+      <Table movies={[]} loadingState="success" />
+    );
+
+    const feedbackMessage = queryByTestId("feedback-message");
+
+    expect(feedbackMessage).toBeTruthy();
+    expect(feedbackMessage.textContent).toMatch(FETCH_MOVIES.EMPTY);
   });
 
   it("Displays an error message of the API call results in an error", () => {
-    //  mock api call to return a 500 error
-    expect(1 + 1).toEqual(3);
+    const { queryByTestId } = render(
+      <Table movies={[]} loadingState="failure" />
+    );
+
+    const feedbackMessage = queryByTestId("feedback-message");
+
+    expect(feedbackMessage).toBeTruthy();
+    expect(feedbackMessage.textContent).toMatch(FETCH_MOVIES.FAILURE);
   });
-  */
 });
 
 /*
