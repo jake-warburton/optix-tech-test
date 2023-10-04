@@ -9,13 +9,13 @@ import Row from "../../../src/components/movieTable/row";
 const mockMovie = {
   id: "1",
   reviews: [6, 8, 3, 9, 8, 7, 8],
+  averageScore: 7.0,
   title: "A Testing Film",
   filmCompanyId: "1",
+  filmCompanyName: "A testing film company",
   cost: 534,
   releaseYear: 2005,
 };
-
-const mockMovieCompany = { id: "1", name: "Test Productions" };
 
 describe("When passed a movie object prop", () => {
   let getByText;
@@ -28,10 +28,10 @@ describe("When passed a movie object prop", () => {
   });
 
   it("displays the average review score to 1 decimal place", () => {
-    expect(getByText("7.0")).toBeTruthy();
+    expect(getByText(mockMovie.averageScore)).toBeTruthy();
   });
 
   it("displays the film company name", () => {
-    expect(getByText(mockMovieCompany.name)).toBeTruthy();
+    expect(getByText(mockMovie.filmCompanyName)).toBeTruthy();
   });
 });

@@ -1,18 +1,16 @@
 import { useState, useMemo } from "react";
-import { easeIn, easeOut } from "polished";
-import { Container, Chip } from "@mui/material";
 
-import { getMovieCompanies, getMovies, postMovieReview } from "./api/movies";
+import { getMovieCompanies, getMovies } from "./api/movies";
+import { LoadingState } from "./constants";
 import { Movie } from "./commonInterfaces";
-import Button from "./components/button";
-import Table from "./components/movieTable/table";
+import Page from "./page";
 
 export const App = () => {
   const [movies, setMovies] = useState<Movie[]>([]);
-  const [loadingState, setLoadingState] = useState("");
+  const [loadingState, setLoadingState] = useState(LoadingState.Initial);
 
   const populateMovies = async () => {
-    setLoadingState("loading");
+    setLoadingState(LoadingState.Loading);
     setMovies([]);
 
     const { movies, success } = await getMovies();
@@ -24,63 +22,29 @@ export const App = () => {
       );
       const filmCompanyName = matchingCompany ? matchingCompany.name : "-";
 
-      return { ...movie, filmCompanyName };
+      const averageScore = (
+        movie.reviews.reduce(
+          (accumulator, current) => accumulator + current,
+          0
+        ) / movie.reviews.length
+      ).toFixed(1);
+
+      return { ...movie, averageScore, filmCompanyName };
     });
 
     setMovies(joinedMovies);
-    setLoadingState(success ? "success" : "failure");
+    setLoadingState(success ? LoadingState.Success : LoadingState.Failure);
   };
 
   useMemo(() => {
-    if (loadingState === "" && movies.length < 1) populateMovies();
+    if (loadingState === LoadingState.Initial) populateMovies();
   }, [loadingState, movies]);
 
   return (
-    <div>
-      <Container maxWidth="lg">
-        <h2>Welcome to Movie database!</h2>
-
-        <div
-          style={{
-            width: "100%",
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-          <Chip
-            data-testid="movie-counter"
-            label={`${
-              loadingState === "loading" ? "Loading" : movies.length
-            } Movies`}
-            variant="outlined"
-          />
-
-          <Button variant="contained" onClick={() => populateMovies()}>
-            Refresh
-          </Button>
-        </div>
-        <Table movies={movies} loadingState={loadingState} />
-      </Container>
-
-      {/*
-      <div>
-        {selectedMovie
-          ? (selectedMovie.title as any)
-            ? (("You have selected " + selectedMovie.title) as any)
-            : "No Movie Title"
-          : "No Movie Seelcted"}
-        {selectedMovie && <p>Please leave a review below</p>}
-        {selectedMovie && (
-          <form onSubmit={() => {}}>
-            <label>
-              Review:
-              <input type="text" />
-            </label>
-          </form>
-        )}
-      </div>
-        */}
-    </div>
+    <Page
+      loadingState={loadingState}
+      movies={movies}
+      refreshData={() => populateMovies()}
+    />
   );
 };

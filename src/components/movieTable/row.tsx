@@ -4,19 +4,21 @@ import { Movie } from "src/commonInterfaces";
 
 interface RowProps {
   movie: Movie;
+  selected: boolean;
+  onClick: () => void;
 }
 
-const Row: React.FC<RowProps> = ({ movie }) => {
-  const averageScore = (
-    movie.reviews.reduce((accumulator, current) => accumulator + current, 0) /
-    movie.reviews.length
-  ).toFixed(1);
-
+const Row: React.FC<RowProps> = ({ movie, selected, onClick }) => {
   return (
-    <TableRow key={`movie-row-${movie.id}`}>
+    <TableRow
+      key={`movie-row-${movie.id}`}
+      selected={selected}
+      onClick={onClick}
+      style={{ cursor: "pointer" }}
+    >
       <TableCell>{movie.title}</TableCell>
       <TableCell>{movie.filmCompanyName}</TableCell>
-      <TableCell>{averageScore}</TableCell>
+      <TableCell>{movie.averageScore}</TableCell>
     </TableRow>
   );
 };

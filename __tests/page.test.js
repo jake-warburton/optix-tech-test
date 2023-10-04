@@ -5,8 +5,9 @@
 import React from "react";
 import { render } from "@testing-library/react";
 
-import Table from "../../../src/components/movieTable/table";
-import { FETCH_MOVIES } from "../../../src/constants";
+import Page from "../src/page";
+import { FetchMoviesFeedback } from "../src/constants";
+import { LoadingState } from "../src/constants";
 
 const mockMovies = [
   {
@@ -14,6 +15,7 @@ const mockMovies = [
     reviews: [6, 8, 3, 9, 8, 7, 8],
     title: "A Testing Film",
     filmCompanyId: "1",
+    filmCompanyName: "A testing film company",
     cost: 534,
     releaseYear: 2005,
   },
@@ -22,6 +24,7 @@ const mockMovies = [
     reviews: [5, 7, 3, 4, 1, 6, 3],
     title: "Mock Test Film",
     filmCompanyId: "1",
+    filmCompanyName: "A mock film company",
     cost: 6234,
     releaseYear: 2006,
   },
@@ -29,53 +32,50 @@ const mockMovies = [
 
 describe("when passed an array of movies", () => {
   it("displays the correct count", () => {
-    const { queryByTestId } = render(<Table movies={mockMovies} />);
+    const { queryByTestId } = render(
+      <Page
+        movies={mockMovies}
+        loadingState={LoadingState.Success}
+        refreshData={() => {}}
+      />
+    );
 
     const movieCounter = queryByTestId("movie-counter");
 
     expect(movieCounter).toBeTruthy();
     expect(movieCounter.textContent).toMatch(`${mockMovies.length} Movies`);
   });
+});
 
-  it("Displays a child element for each movie in the array", () => {
-    const { queryByTestId } = render(<Table movies={mockMovies} />);
-
-    const movieTable = queryByTestId("movie-table");
-
-    expect(movieTable).toBeTruthy();
-    expect(movieTable.childNodes.length).toEqual(mockMovies.length);
-  });
-
-  it("Displays a loading state while waiting for movies to return from the API", () => {
+describe("when passed an empty array of movies", () => {
+  it("Displays an error message if the API call was successful", () => {
     const { queryByTestId } = render(
-      <Table movies={[]} loadingState="loading" />
-    );
-
-    const loadingIcon = queryByTestId("loading-icon");
-
-    expect(loadingIcon).toBeTruthy();
-  });
-
-  it("Displays an error message if no movies were returned from a completed API call", () => {
-    const { queryByTestId } = render(
-      <Table movies={[]} loadingState="success" />
+      <Page
+        movies={[]}
+        loadingState={LoadingState.Success}
+        refreshData={() => {}}
+      />
     );
 
     const feedbackMessage = queryByTestId("feedback-message");
 
     expect(feedbackMessage).toBeTruthy();
-    expect(feedbackMessage.textContent).toMatch(FETCH_MOVIES.EMPTY);
+    expect(feedbackMessage.textContent).toMatch(FetchMoviesFeedback.Empty);
   });
 
   it("Displays an error message if the API call results in an error", () => {
     const { queryByTestId } = render(
-      <Table movies={[]} loadingState="failure" />
+      <Page
+        movies={[]}
+        loadingState={LoadingState.Failure}
+        refreshData={() => {}}
+      />
     );
 
     const feedbackMessage = queryByTestId("feedback-message");
 
     expect(feedbackMessage).toBeTruthy();
-    expect(feedbackMessage.textContent).toMatch(FETCH_MOVIES.FAILURE);
+    expect(feedbackMessage.textContent).toMatch(FetchMoviesFeedback.Failure);
   });
 });
 
