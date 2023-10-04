@@ -17,10 +17,9 @@ export const App = () => {
     const { movieCompanies } = await getMovieCompanies();
 
     const joinedMovies = movies.map((movie) => {
-      const matchingCompany = movieCompanies.find(
-        (company) => company.id === movie.filmCompanyId
-      );
-      const filmCompanyName = matchingCompany ? matchingCompany.name : "-";
+      const filmCompanyName =
+        movieCompanies.find((company) => company.id === movie.filmCompanyId)
+          ?.name ?? "-";
 
       const averageScore = (
         movie.reviews.reduce(

@@ -2,7 +2,7 @@ export interface Movie {
   id: string;
   title: string;
   reviews: number[];
-  averageScore?: number;
+  averageScore?: string;
   filmCompanyId: string;
   filmCompanyName?: string;
   cost: number;
