@@ -1,10 +1,9 @@
 import { useState, useMemo } from "react";
 import { easeIn, easeOut } from "polished";
+import { Container, Chip } from "@mui/material";
 
-import { Container } from "@mui/material";
-
-import { Movie } from "./commonInterfaces";
 import { getMovieCompanies, getMovies, postMovieReview } from "./api/movies";
+import { Movie } from "./commonInterfaces";
 import Button from "./components/button";
 import Table from "./components/movieTable/table";
 
@@ -13,13 +12,10 @@ export const App = () => {
   const [loadingState, setLoadingState] = useState("");
 
   const populateMovies = async () => {
-    console.log("JAKE populate movies called");
-
     setLoadingState("loading");
     setMovies([]);
 
     const { movies, success } = await getMovies();
-
     const { movieCompanies } = await getMovieCompanies();
 
     const joinedMovies = movies.map((movie) => {
@@ -44,7 +40,22 @@ export const App = () => {
       <Container maxWidth="lg">
         <h2>Welcome to Movie database!</h2>
 
-        <div style={{}}>
+        <div
+          style={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <Chip
+            data-testid="movie-counter"
+            label={`${
+              loadingState === "loading" ? "Loading" : movies.length
+            } Movies`}
+            variant="outlined"
+          />
+
           <Button variant="contained" onClick={() => populateMovies()}>
             Refresh
           </Button>

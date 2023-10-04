@@ -77,9 +77,9 @@ export const postMovieReview = async (
       message: response.status === 200 ? response.data : null,
       success: response.status === 200 ? true : false,
     };
-  } catch (err) {
+  } catch (err: any) {
     return {
-      message: "Posting a review was not successful",
+      message: err.message,
       success: false,
     };
   }
