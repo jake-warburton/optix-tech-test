@@ -38,6 +38,7 @@ const Table: React.FC<TableProps> = ({ movies, loadingState }) => (
         <MUITable data-testid="movie-table">
           <MUITableHead>
             <MUITableCell>Movie</MUITableCell>
+            <MUITableCell>Company</MUITableCell>
             <MUITableCell>Avg. Rating</MUITableCell>
           </MUITableHead>
           <MUITableBody>

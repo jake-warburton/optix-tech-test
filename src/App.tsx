@@ -1,37 +1,43 @@
-import { useRef, useState, Children } from "react";
+import { useState, useMemo } from "react";
 import { easeIn, easeOut } from "polished";
-import { useBoolean } from "react-use";
 
 import { Container } from "@mui/material";
 
+import { Movie } from "./commonInterfaces";
+import { getMovieCompanies, getMovies, postMovieReview } from "./api/movies";
 import Button from "./components/button";
 import Table from "./components/movieTable/table";
 
-// TODO: use https://comforting-starlight-f3456a.netlify.app/.netlify/functions/movieCompanies
-const mockMovieCompanyData: any = [{ id: "1", name: "Test Productions" }];
-
-// TODO: use https://comforting-starlight-f3456a.netlify.app/.netlify/functions/movies
-const mockMovieData: any = [
-  {
-    id: "1",
-    reviews: [6, 8, 3, 9, 8, 7, 8],
-    title: "A Testing Film",
-    filmCompanyId: "1",
-    cost: 534,
-    releaseYear: 2005,
-  },
-  {
-    id: "2",
-    reviews: [5, 7, 3, 4, 1, 6, 3],
-    title: "Mock Test Film",
-    filmCompanyId: "1",
-    cost: 6234,
-    releaseYear: 2006,
-  },
-];
-
 export const App = () => {
-  //  Accumulate movies here and append filmCompanyName with find
+  const [movies, setMovies] = useState<Movie[]>([]);
+  const [loadingState, setLoadingState] = useState("");
+
+  const populateMovies = async () => {
+    console.log("JAKE populate movies called");
+
+    setLoadingState("loading");
+    setMovies([]);
+
+    const { movies, success } = await getMovies();
+
+    const { movieCompanies } = await getMovieCompanies();
+
+    const joinedMovies = movies.map((movie) => {
+      const matchingCompany = movieCompanies.find(
+        (company) => company.id === movie.filmCompanyId
+      );
+      const filmCompanyName = matchingCompany ? matchingCompany.name : "-";
+
+      return { ...movie, filmCompanyName };
+    });
+
+    setMovies(joinedMovies);
+    setLoadingState(success ? "success" : "failure");
+  };
+
+  useMemo(() => {
+    if (loadingState === "" && movies.length < 1) populateMovies();
+  }, [loadingState, movies]);
 
   return (
     <div>
@@ -39,14 +45,11 @@ export const App = () => {
         <h2>Welcome to Movie database!</h2>
 
         <div style={{}}>
-          <Button
-            variant="contained"
-            onClick={() => alert("refresh movies and companies")}
-          >
+          <Button variant="contained" onClick={() => populateMovies()}>
             Refresh
           </Button>
         </div>
-        <Table movies={mockMovieData} loadingState="success" />
+        <Table movies={movies} loadingState={loadingState} />
       </Container>
 
       {/*

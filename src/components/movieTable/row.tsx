@@ -15,6 +15,7 @@ const Row: React.FC<RowProps> = ({ movie }) => {
   return (
     <TableRow key={`movie-row-${movie.id}`}>
       <TableCell>{movie.title}</TableCell>
+      <TableCell>{movie.filmCompanyName}</TableCell>
       <TableCell>{averageScore}</TableCell>
     </TableRow>
   );

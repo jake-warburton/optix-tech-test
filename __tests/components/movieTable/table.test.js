@@ -67,7 +67,7 @@ describe("when passed an array of movies", () => {
     expect(feedbackMessage.textContent).toMatch(FETCH_MOVIES.EMPTY);
   });
 
-  it("Displays an error message of the API call results in an error", () => {
+  it("Displays an error message if the API call results in an error", () => {
     const { queryByTestId } = render(
       <Table movies={[]} loadingState="failure" />
     );
