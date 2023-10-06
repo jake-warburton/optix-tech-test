@@ -1,66 +1,43 @@
-import { TableHead, TableCell, TableSortLabel, TableRow } from "@mui/material";
-
-const getNextSortDirection = (currentDirection) => {
-  if (currentDirection === "asc") return "desc";
-  if (currentDirection === "desc") return "";
-  return "asc";
-};
+import Header from "../elements/table/header";
+import { sortDirections } from "../../constants";
 
 const headings = [
   {
     id: "title",
-    name: "Movie",
+    displayName: "Movie",
   },
   {
     id: "filmCompanyName",
-    name: "Company",
+    displayName: "Company",
   },
   {
-    id: "reviews",
-    name: "Avg. Rating",
+    id: "averageScore",
+    displayName: "Avg. Rating",
   },
 ];
 
-interface HeaderProps {
+interface MovieTableHeaderProps {
   sortKey?: string;
-  setSortKey: () => void;
-  sortDirection?: string;
-  setSortDirection: () => void;
+  setSortKey: (sortKey: string | undefined) => void;
+  sortDirection?: sortDirections | undefined;
+  setSortDirection: (sortDirection: sortDirections | undefined) => void;
 }
 
-const Header: React.FC<HeaderProps> = ({
+const MovieTableHeader: React.FC<MovieTableHeaderProps> = ({
   sortKey,
   setSortKey,
   sortDirection,
   setSortDirection,
-}) => (
-  <TableHead>
-    <TableRow>
-      {headings.map((heading) => (
-        <TableCell>
-          <TableSortLabel
-            style={{ fontWeight: "600" }}
-            active={sortKey === heading.id}
-            direction={sortDirection}
-            onClick={() => {
-              setSortKey(
-                sortKey === heading.id && sortDirection === "desc"
-                  ? ""
-                  : heading.id
-              );
-              setSortDirection(
-                sortKey === heading.id
-                  ? getNextSortDirection(sortDirection)
-                  : "asc"
-              );
-            }}
-          >
-            {heading.name} TODO FIX SORTING
-          </TableSortLabel>
-        </TableCell>
-      ))}
-    </TableRow>
-  </TableHead>
-);
+}) => {
+  return (
+    <Header
+      headings={headings}
+      sortKey={sortKey}
+      setSortKey={setSortKey}
+      sortDirection={sortDirection}
+      setSortDirection={setSortDirection}
+    />
+  );
+};
 
-export default Header;
+export default MovieTableHeader;

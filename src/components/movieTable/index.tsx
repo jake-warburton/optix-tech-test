@@ -7,15 +7,18 @@ import {
 import Header from "./header";
 import Body from "./body";
 
+import { sortDirections } from "../../constants";
 import { Movie } from "../../commonInterfaces";
 
-const sortMovies = (movies: any, key?: string, direction?: string) => {
+const sortMovies = (movies: any, key?: string, direction?: sortDirections) => {
   if (!movies) return;
   if (!key || !direction) return movies;
 
-  return direction === "desc"
-    ? movies.sort((a: any, b: any) => a[key] > b[key])
-    : movies.sort((a: any, b: any) => a[key] < b[key]);
+  const sortedMovies: any = [...movies];
+
+  return direction === sortDirections.Descending
+    ? sortedMovies.sort((a: any, b: any) => a[key] > b[key])
+    : sortedMovies.sort((a: any, b: any) => a[key] < b[key]);
 };
 
 interface TableProps {
@@ -29,12 +32,14 @@ const Table: React.FC<TableProps> = ({
   selectedRow,
   setSelectedRow,
 }) => {
-  const [sortKey, setSortKey] = useState();
-  const [sortDirection, setSortDirection] = useState();
+  const [sortKey, setSortKey] = useState<string | undefined>(undefined);
+  const [sortDirection, setSortDirection] = useState<
+    sortDirections | undefined
+  >(undefined);
 
-  const sortedMovies = useMemo(() =>
-    sortMovies(movies, sortKey, sortDirection, [movies, sortKey, sortDirection])
-  );
+  const sortedMovies = useMemo(() => {
+    return sortMovies(movies, sortKey, sortDirection);
+  }, [movies, sortKey, sortDirection]);
 
   return (
     <MUITableContainer

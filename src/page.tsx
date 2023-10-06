@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { Container, Chip, CircularProgress } from "@mui/material";
-import { easeIn, easeOut } from "polished";
+//  import { easeIn, easeOut } from "polished";
 
 import { LoadingState } from "./constants";
 import { Movie } from "./commonInterfaces";
-import Button from "./components/button";
+import Button from "./components/elements/button";
+import Modal from "./components/elements/modal";
 import Table from "./components/movieTable";
 import Feedback from "./components/feedback";
 
@@ -68,6 +69,15 @@ const Page: React.FC<PageProps> = ({ loadingState, movies, refreshData }) => {
         </div>
       </Container>
 
+      {selectedRow > -1 && (
+        <Modal
+          showModal={selectedRow > -1}
+          onClose={() => setSelectedRow(-1)}
+          heading="Review form"
+        >
+          Modal Content
+        </Modal>
+      )}
       {/*
       <div>
         {selectedMovie

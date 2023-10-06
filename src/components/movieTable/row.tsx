@@ -1,26 +1,27 @@
-import { TableCell, TableRow } from "@mui/material";
+import Row from "../elements/table/row";
+import { Movie } from "../../commonInterfaces";
 
-import { Movie } from "src/commonInterfaces";
-
-interface RowProps {
+interface MovieTableRow {
   movie: Movie;
   selected: boolean;
   onClick: () => void;
 }
 
-const Row: React.FC<RowProps> = ({ movie, selected, onClick }) => {
+const MovieTableRow: React.FC<MovieTableRow> = ({
+  movie,
+  selected,
+  onClick,
+}) => {
+  const cells = [movie.title, movie.filmCompanyName, movie.averageScore];
+
   return (
-    <TableRow
+    <Row
       key={`movie-row-${movie.id}`}
+      cells={cells}
       selected={selected}
       onClick={onClick}
-      style={{ cursor: "pointer" }}
-    >
-      <TableCell>{movie.title}</TableCell>
-      <TableCell>{movie.filmCompanyName}</TableCell>
-      <TableCell>{movie.averageScore}</TableCell>
-    </TableRow>
+    />
   );
 };
 
-export default Row;
+export default MovieTableRow;
