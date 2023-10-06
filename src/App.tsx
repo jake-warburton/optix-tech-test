@@ -1,9 +1,9 @@
 import { useState, useMemo } from "react";
 
-import { getMovieCompanies, getMovies } from "./api/movies";
+import { getAssembledMovies } from "./utilities/getAssembledMovies";
 import { LoadingState } from "./constants";
 import { Movie } from "./commonInterfaces";
-import Page from "./page";
+import Page from "./pages/index";
 
 export const App = () => {
   const [movies, setMovies] = useState<Movie[]>([]);
@@ -13,26 +13,12 @@ export const App = () => {
     setLoadingState(LoadingState.Loading);
     setMovies([]);
 
-    const { movies, success } = await getMovies();
-    const { movieCompanies } = await getMovieCompanies();
+    const assembledMovieData = await getAssembledMovies();
 
-    const joinedMovies = movies.map((movie) => {
-      const filmCompanyName =
-        movieCompanies.find((company) => company.id === movie.filmCompanyId)
-          ?.name ?? "-";
-
-      const averageScore = (
-        movie.reviews.reduce(
-          (accumulator, current) => accumulator + current,
-          0
-        ) / movie.reviews.length
-      ).toFixed(1);
-
-      return { ...movie, averageScore, filmCompanyName };
-    });
-
-    setMovies(joinedMovies);
-    setLoadingState(success ? LoadingState.Success : LoadingState.Failure);
+    setMovies(assembledMovieData ? assembledMovieData : []);
+    setLoadingState(
+      assembledMovieData ? LoadingState.Success : LoadingState.Failure
+    );
   };
 
   useMemo(() => {

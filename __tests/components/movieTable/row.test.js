@@ -4,18 +4,8 @@
 
 import { render } from "@testing-library/react";
 
-import Row from "../../../src/components/movieTable/row";
-
-const mockMovie = {
-  id: "1",
-  reviews: [6, 8, 3, 9, 8, 7, 8],
-  averageScore: 7.0,
-  title: "A Testing Film",
-  filmCompanyId: "1",
-  filmCompanyName: "A testing film company",
-  cost: 534,
-  releaseYear: 2005,
-};
+import Row from "../../../src/components/movieComponents/movieTable/row";
+import { mockMovie } from "../../mockData";
 
 describe("When passed a movie object prop", () => {
   let getByText;

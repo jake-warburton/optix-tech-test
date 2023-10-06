@@ -1,5 +1,5 @@
-import Row from "../elements/table/row";
-import { Movie } from "../../commonInterfaces";
+import Row from "../../elements/table/row";
+import { Movie } from "../../../commonInterfaces";
 
 interface MovieTableRow {
   movie: Movie;
@@ -16,7 +16,7 @@ const MovieTableRow: React.FC<MovieTableRow> = ({
 
   return (
     <Row
-      key={`movie-row-${movie.id}`}
+      id={`movie-row-${movie.id}`}
       cells={cells}
       selected={selected}
       onClick={onClick}

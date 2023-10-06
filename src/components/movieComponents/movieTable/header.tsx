@@ -1,5 +1,5 @@
-import Header from "../elements/table/header";
-import { sortDirections } from "../../constants";
+import Header from "../../elements/table/header";
+import { sortDirections } from "../../../constants";
 
 const headings = [
   {

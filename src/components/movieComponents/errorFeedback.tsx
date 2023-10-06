@@ -1,14 +1,14 @@
 import { Alert } from "@mui/material";
 
-import { FetchMoviesFeedback, LoadingState } from "../constants";
+import { FetchMoviesFeedback, LoadingState } from "../../constants";
 
-interface FeedbackProps {
+interface ErrorFeedbackProps {
   loadingState: string;
 }
 
-const Feedback: React.FC<FeedbackProps> = ({ loadingState }) => (
+const ErrorFeedback: React.FC<ErrorFeedbackProps> = ({ loadingState }) => (
   <Alert
-    data-testid="feedback-message"
+    data-testid="error-feedback-message"
     severity={loadingState === LoadingState.Failure ? "error" : "warning"}
   >
     {loadingState === LoadingState.Success && FetchMoviesFeedback.Empty}
@@ -16,4 +16,4 @@ const Feedback: React.FC<FeedbackProps> = ({ loadingState }) => (
   </Alert>
 );
 
-export default Feedback;
+export default ErrorFeedback;

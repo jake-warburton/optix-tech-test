@@ -56,17 +56,13 @@ export const getMovieCompanies =
     }
   };
 
-interface PostMovieReviewRequest {
-  message: string;
-}
-
 interface PostMovieReviewResponse {
   message: string;
   success: boolean;
 }
 
 export const postMovieReview = async (
-  message: PostMovieReviewRequest
+  message: string
 ): Promise<PostMovieReviewResponse> => {
   try {
     const response = await axios.post(`${MOVIE_DATABASE_URL}submitReview`, {
@@ -74,7 +70,7 @@ export const postMovieReview = async (
     });
 
     return {
-      message: response.status === 200 ? response.data : null,
+      message: response.status === 200 ? response.data.message : null,
       success: response.status === 200 ? true : false,
     };
   } catch (err: any) {

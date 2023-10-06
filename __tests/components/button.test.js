@@ -4,7 +4,7 @@
 
 import { render, fireEvent } from "@testing-library/react";
 
-import Button from "../../src/components/button";
+import Button from "../../src/components/elements/button";
 
 const testValue = "Test 123";
 

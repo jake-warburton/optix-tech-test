@@ -1,16 +1,17 @@
 import { TableCell, TableRow } from "@mui/material";
 
 interface RowProps {
-  key: string;
+  id: string;
   cells: any[];
   selected: boolean;
   onClick: () => void;
 }
 
-const Row: React.FC<RowProps> = ({ key, cells, selected, onClick }) => {
+const Row: React.FC<RowProps> = ({ id, cells, selected, onClick }) => {
   return (
     <TableRow
-      key={key}
+      key={id}
+      data-testid={id}
       selected={selected}
       onClick={onClick}
       style={{ cursor: "pointer" }}
