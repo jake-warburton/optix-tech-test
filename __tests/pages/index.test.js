@@ -5,10 +5,10 @@
 import { fireEvent, render } from "@testing-library/react";
 import "@testing-library/jest-dom";
 
-import Page from "../src/pages/index";
-import { FetchMoviesFeedback } from "../src/constants";
-import { LoadingState } from "../src/constants";
-import { mockMovies } from "./mockData";
+import Page from "../../src/pages/index";
+import { FetchMoviesFeedback } from "../../src/constants";
+import { LoadingState } from "../../src/constants";
+import { mockMovies } from "../mockData";
 
 describe("when passed an array of movies", () => {
   it("displays the correct count", () => {

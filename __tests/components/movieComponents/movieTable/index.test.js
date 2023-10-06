@@ -5,8 +5,8 @@
 import React from "react";
 import { render } from "@testing-library/react";
 
-import Table from "../../../src/components/movieComponents/movieTable";
-import { mockMovies } from "../../mockData";
+import Table from "../../../../src/components/movieComponents/movieTable";
+import { mockMovies } from "../../../mockData";
 
 describe("when passed an array of movies", () => {
   it("Displays a child element for each movie in the array", () => {

@@ -5,9 +5,9 @@
 import { render, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
 
-import { MovieReviewFeedback } from "../../src/constants";
-import ReviewForm from "../../src/components/movieComponents/reviewForm";
-import { mockMovie } from "../mockData";
+import { MovieReviewFeedback } from "../../../src/constants";
+import ReviewForm from "../../../src/components/movieComponents/reviewForm";
+import { mockMovie } from "../../mockData";
 
 describe("if the user enters a review over 100 characters", () => {
   it("displays an error message", () => {
