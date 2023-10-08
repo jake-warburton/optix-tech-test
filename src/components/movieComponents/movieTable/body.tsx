@@ -14,7 +14,7 @@ const Body: React.FC<BodyProps> = ({
   selectedMovieId,
   setSelectedMovieId,
 }) => (
-  <TableBody>
+  <TableBody data-testid="movie-table-body">
     {movies.map((movie, i) => (
       <Row
         movie={movie}

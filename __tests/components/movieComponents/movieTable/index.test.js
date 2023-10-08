@@ -12,7 +12,7 @@ describe("when passed an array of movies", () => {
   it("Displays a child element for each movie in the array", () => {
     const { queryByTestId } = render(<Table movies={mockMovies} />);
 
-    const movieTable = queryByTestId("movie-table");
+    const movieTable = queryByTestId("movie-table-body");
 
     expect(movieTable).toBeTruthy();
     expect(movieTable.childNodes.length).toEqual(mockMovies.length);
