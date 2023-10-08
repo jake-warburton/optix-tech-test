@@ -4,7 +4,7 @@
 
 import { render } from "@testing-library/react";
 
-import Row from "../../../../src/components/movieComponents/movieTable/row";
+import Row from "../../../../src/components/movieComponents/movieTable/movieTableRow";
 import { mockMovie } from "../../../mockData";
 
 describe("When passed a movie object prop", () => {

@@ -6,20 +6,20 @@ import {
   Table as MUITable,
 } from "@mui/material";
 
-import Header from "./header";
-import Body from "./body";
+import Header from "./movieTableHeader";
+import Body from "./movieTableBody";
 
 import { sortDirections } from "../../../constants";
 import { Movie } from "../../../commonInterfaces";
 import { sortByKey } from "../../../utilities/sortByKey";
 
-interface TableProps {
+interface MovieTableProps {
   movies: Movie[];
   selectedMovieId?: number;
   setSelectedMovieId: (i: number) => void;
 }
 
-const Table: React.FC<TableProps> = ({
+const MovieTable: React.FC<MovieTableProps> = ({
   movies,
   selectedMovieId,
   setSelectedMovieId,
@@ -29,9 +29,10 @@ const Table: React.FC<TableProps> = ({
     sortDirections | undefined
   >(undefined);
 
-  const sortedMovies = useMemo(() => {
-    return sortByKey(movies, sortKey, sortDirection);
-  }, [movies, sortKey, sortDirection]);
+  const sortedMovies = useMemo(
+    () => sortByKey(movies, sortKey, sortDirection),
+    [movies, sortKey, sortDirection]
+  );
 
   return (
     <Card style={{ width: "100%" }}>
@@ -56,4 +57,4 @@ const Table: React.FC<TableProps> = ({
   );
 };
 
-export default Table;
+export default MovieTable;

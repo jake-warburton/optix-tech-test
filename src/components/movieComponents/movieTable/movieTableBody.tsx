@@ -1,15 +1,15 @@
 import { TableBody } from "@mui/material";
 
 import { Movie } from "../../../commonInterfaces";
-import Row from "./row";
+import Row from "./movieTableRow";
 
-interface BodyProps {
+interface MovieTableBodyProps {
   movies: Movie[];
   selectedMovieId?: number;
   setSelectedMovieId: (i: number) => void;
 }
 
-const Body: React.FC<BodyProps> = ({
+const MovieTableBody: React.FC<MovieTableBodyProps> = ({
   movies,
   selectedMovieId,
   setSelectedMovieId,
@@ -26,4 +26,4 @@ const Body: React.FC<BodyProps> = ({
   </TableBody>
 );
 
-export default Body;
+export default MovieTableBody;

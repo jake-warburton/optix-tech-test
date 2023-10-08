@@ -25,7 +25,7 @@ export const mockMovies = [
     id: "3",
     revies: [2, 6, 7, 3, 7, 8],
     averageScore: 5.5,
-    title: "Another mock film",
+    title: "Best mock film",
     filmCompanyId: "2",
     filmCompanyName: "Joined mock film company name",
     cost: 10999,
