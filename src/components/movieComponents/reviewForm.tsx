@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Alert, Box, Chip, TextField } from "@mui/material";
+import { Alert, Box, Chip, CircularProgress, TextField } from "@mui/material";
 
 import { postMovieReview } from "../../api/movies";
 import { Movie } from "../../commonInterfaces";
@@ -46,7 +46,7 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ movie }) => {
         alignItems: "center",
       }}
     >
-      {movie && <Chip label={movie.title} />}
+      {movie ? <Chip label={movie.title} /> : <CircularProgress />}
 
       <Box style={{ width: "100%", margin: "20px 0px" }}>
         {submissionFeedback ? (

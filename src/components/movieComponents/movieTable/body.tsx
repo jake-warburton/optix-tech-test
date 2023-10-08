@@ -15,10 +15,11 @@ const Body: React.FC<BodyProps> = ({
   setSelectedMovieId,
 }) => (
   <TableBody>
-    {movies.map((movie) => (
+    {movies.map((movie, i) => (
       <Row
         movie={movie}
         selected={selectedMovieId === parseInt(movie.id)}
+        darkenRow={i % 2 === 1}
         onClick={() => setSelectedMovieId(parseInt(movie.id))}
       />
     ))}

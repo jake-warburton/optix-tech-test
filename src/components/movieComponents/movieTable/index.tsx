@@ -11,21 +11,7 @@ import Body from "./body";
 
 import { sortDirections } from "../../../constants";
 import { Movie } from "../../../commonInterfaces";
-
-const sortMovies = (
-  movies: any,
-  sortKey?: string,
-  direction?: sortDirections
-) => {
-  if (!movies) return;
-  if (!sortKey || !direction) return movies;
-
-  const sortedMovies: any = [...movies];
-
-  return direction === sortDirections.Descending
-    ? sortedMovies.sort((a: any, b: any) => a[sortKey] > b[sortKey])
-    : sortedMovies.sort((a: any, b: any) => a[sortKey] < b[sortKey]);
-};
+import { sortByKey } from "../../../utilities/sortByKey";
 
 interface TableProps {
   movies: Movie[];
@@ -44,7 +30,7 @@ const Table: React.FC<TableProps> = ({
   >(undefined);
 
   const sortedMovies = useMemo(() => {
-    return sortMovies(movies, sortKey, sortDirection);
+    return sortByKey(movies, sortKey, sortDirection);
   }, [movies, sortKey, sortDirection]);
 
   return (

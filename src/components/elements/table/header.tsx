@@ -1,17 +1,7 @@
 import { TableHead, TableCell, TableSortLabel, TableRow } from "@mui/material";
 
 import { sortDirections } from "../../../constants";
-
-const getSortDirection = (currentDirection: sortDirections | undefined) => {
-  switch (currentDirection) {
-    case sortDirections.Descending:
-      return sortDirections.Ascending;
-    case sortDirections.Ascending:
-      return undefined;
-    default:
-      return sortDirections.Descending;
-  }
-};
+import { getNextSortDirection } from "../../../utilities/getNextSortDirection";
 
 interface HeaderProps {
   headings: { id: string; displayName: string }[];
@@ -34,7 +24,7 @@ const Header: React.FC<HeaderProps> = ({
       setSortDirection(sortDirections.Descending);
     } else {
       if (sortDirection === sortDirections.Ascending) setSortKey(undefined);
-      setSortDirection(getSortDirection(sortDirection));
+      setSortDirection(getNextSortDirection(sortDirection));
     }
   };
 
