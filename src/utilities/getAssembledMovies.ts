@@ -2,11 +2,26 @@ import { getMovieCompanies, getMovies } from "../api/movies";
 import { getAverageMovieScore } from "./getAverageMovieScore";
 
 export const getAssembledMovies = async () => {
-  const { movies, success } = await getMovies();
+  const {
+    movies,
+    success: getMoviesSuccess,
+    error: getMoviesError,
+  } = await getMovies();
 
-  if (!success) return;
+  if (!getMoviesSuccess) {
+    console.error(getMoviesError);
+    return;
+  }
 
-  const { movieCompanies } = await getMovieCompanies();
+  const {
+    movieCompanies,
+    success: getMovieCompaniesSuccess,
+    error: getMovieCompaniesError,
+  } = await getMovieCompanies();
+
+  if (!getMovieCompaniesSuccess) {
+    console.error(getMovieCompaniesError);
+  }
 
   return movies.map((movie) => {
     const filmCompanyName =

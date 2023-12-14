@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from "react";
 import {
+  Box,
   Card,
   CardContent,
   TableContainer as MUITableContainer,
@@ -9,7 +10,7 @@ import {
 import Header from "./movieTableHeader";
 import Body from "./movieTableBody";
 
-import { sortDirections } from "../../../constants";
+import { SORT_DIRECTIONS } from "../../../constants";
 import { Movie } from "../../../commonInterfaces";
 import { sortByKey } from "../../../utilities/sortByKey";
 
@@ -24,36 +25,39 @@ const MovieTable: React.FC<MovieTableProps> = ({
   selectedMovieId,
   setSelectedMovieId,
 }) => {
-  const [sortKey, setSortKey] = useState<string | undefined>(undefined);
+  const [sortKey, setSortKey] = useState<keyof Movie | undefined>(undefined);
   const [sortDirection, setSortDirection] = useState<
-    sortDirections | undefined
+    SORT_DIRECTIONS | undefined
   >(undefined);
 
-  const sortedMovies = useMemo(
-    () => sortByKey(movies, sortKey, sortDirection),
-    [movies, sortKey, sortDirection]
-  );
+  const sortedMovies = useMemo(() => {
+    if (sortKey && sortDirection)
+      return sortByKey(movies, sortKey, sortDirection);
+    return movies;
+  }, [movies, sortKey, sortDirection]);
 
   return (
-    <Card style={{ width: "100%" }}>
-      <CardContent>
-        <MUITableContainer>
-          <MUITable data-testid="movie-table">
-            <Header
-              sortKey={sortKey}
-              setSortKey={setSortKey}
-              sortDirection={sortDirection}
-              setSortDirection={setSortDirection}
-            />
-            <Body
-              movies={sortedMovies}
-              selectedMovieId={selectedMovieId}
-              setSelectedMovieId={setSelectedMovieId}
-            />
-          </MUITable>
-        </MUITableContainer>
-      </CardContent>
-    </Card>
+    <Box width="100%">
+      <Card>
+        <CardContent>
+          <MUITableContainer>
+            <MUITable data-testid="movie-table">
+              <Header
+                sortKey={sortKey}
+                setSortKey={setSortKey}
+                sortDirection={sortDirection}
+                setSortDirection={setSortDirection}
+              />
+              <Body
+                movies={sortedMovies}
+                selectedMovieId={selectedMovieId}
+                setSelectedMovieId={setSelectedMovieId}
+              />
+            </MUITable>
+          </MUITableContainer>
+        </CardContent>
+      </Card>
+    </Box>
   );
 };
 

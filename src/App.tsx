@@ -1,29 +1,29 @@
-import { useState, useMemo } from "react";
+import { useState, useEffect } from "react";
 
 import { getAssembledMovies } from "./utilities/getAssembledMovies";
-import { LoadingState } from "./constants";
+import { LOADING_STATE } from "./constants";
 import { Movie } from "./commonInterfaces";
 import Page from "./pages/index";
 
 export const App = () => {
   const [movies, setMovies] = useState<Movie[]>([]);
-  const [loadingState, setLoadingState] = useState(LoadingState.Initial);
+  const [loadingState, setLoadingState] = useState(LOADING_STATE.Initial);
 
   const populateMovies = async () => {
-    setLoadingState(LoadingState.Loading);
+    setLoadingState(LOADING_STATE.Loading);
     setMovies([]);
 
     const assembledMovieData = await getAssembledMovies();
 
     setMovies(assembledMovieData ? assembledMovieData : []);
     setLoadingState(
-      assembledMovieData ? LoadingState.Success : LoadingState.Failure
+      assembledMovieData ? LOADING_STATE.Success : LOADING_STATE.Failure
     );
   };
 
-  useMemo(() => {
-    if (loadingState === LoadingState.Initial) populateMovies();
-  }, [loadingState, movies]);
+  useEffect(() => {
+    populateMovies();
+  }, []);
 
   return (
     <Page

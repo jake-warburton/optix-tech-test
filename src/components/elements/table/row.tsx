@@ -1,8 +1,9 @@
 import { TableCell, TableRow } from "@mui/material";
+import React from "react";
 
 interface RowProps {
   id: string;
-  cells: any[];
+  cells: React.ReactNode[];
   selected: boolean;
   darkenRow?: boolean;
   onClick: () => void;
@@ -21,7 +22,7 @@ const Row: React.FC<RowProps> = ({
       data-testid={id}
       selected={selected}
       onClick={onClick}
-      style={{
+      sx={{
         cursor: "pointer",
         backgroundColor: !selected && darkenRow ? "#efefef" : "",
       }}

@@ -5,7 +5,7 @@
 import { render, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
 
-import { MovieReviewFeedback } from "../../../src/constants";
+import { MOVIE_FEEDBACK_REVIEW } from "../../../src/constants";
 import ReviewForm from "../../../src/components/movieComponents/reviewForm";
 import { mockMovie } from "../../mockData";
 
@@ -15,14 +15,14 @@ describe("if the user enters a review over 100 characters", () => {
       <ReviewForm id="movie-review-form" movie={mockMovie} />
     );
 
-    const textBox = queryByPlaceholderText(MovieReviewFeedback.Placeholder);
+    const textBox = queryByPlaceholderText(MOVIE_FEEDBACK_REVIEW.Placeholder);
     expect(textBox).toBeTruthy();
 
     fireEvent.change(textBox, {
       target: { value: "A".repeat(101) },
     });
 
-    const errorMessage = getByText(MovieReviewFeedback.TooLong);
+    const errorMessage = getByText(MOVIE_FEEDBACK_REVIEW.TooLong);
     expect(errorMessage).toBeInTheDocument();
   });
 

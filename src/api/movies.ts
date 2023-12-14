@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { isAxiosError } from "axios";
 
 import { Movie, MovieCompany } from "../commonInterfaces";
 import { MOVIE_DATABASE_URL } from "../constants";
@@ -20,11 +20,21 @@ export const getMovies = async (): Promise<GetMoviesResponse> => {
           : [],
       success: true,
     };
-  } catch (err: any) {
+  } catch (err) {
+    if (isAxiosError(err)) {
+      return {
+        movies: [],
+        success: false,
+        error: err.message,
+      };
+    }
+
+    console.error(err);
+
     return {
       movies: [],
-      error: err.message,
       success: false,
+      error: "Failed to fetch movies from the API",
     };
   }
 };
@@ -47,11 +57,21 @@ export const getMovieCompanies =
             : [],
         success: true,
       };
-    } catch (err: any) {
+    } catch (err) {
+      if (isAxiosError(err)) {
+        return {
+          movieCompanies: [],
+          success: false,
+          error: err.message,
+        };
+      }
+
+      console.error(err);
+
       return {
         movieCompanies: [],
-        error: err.message,
         success: false,
+        error: "Failed to fetch movie companies from the API",
       };
     }
   };
@@ -70,12 +90,24 @@ export const postMovieReview = async (
     });
 
     return {
-      message: response.status === 200 ? response.data.message : null,
+      message:
+        response.status === 200
+          ? response.data.message
+          : "Failed to submit your movie review. Please try again later.",
       success: response.status === 200 ? true : false,
     };
-  } catch (err: any) {
+  } catch (err) {
+    if (isAxiosError(err)) {
+      return {
+        message: err.message,
+        success: false,
+      };
+    }
+
+    console.error(err);
+
     return {
-      message: err.message,
+      message: "Failed to submit your movie review. Please try again later.",
       success: false,
     };
   }

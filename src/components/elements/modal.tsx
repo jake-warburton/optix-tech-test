@@ -10,7 +10,7 @@ interface ModalProps {
   mobileOnly: boolean;
   heading: string;
   id: string;
-  children: any;
+  children: React.ReactNode;
 }
 
 const Modal: React.FC<ModalProps> = ({
@@ -22,42 +22,29 @@ const Modal: React.FC<ModalProps> = ({
   children,
 }) => {
   return (
-    <Dialog
-      fullWidth
-      maxWidth="md"
-      open={showModal}
-      onClose={onClose}
-      data-testid={id}
-      style={{
-        display: `${
-          mobileOnly && useMediaQuery("(min-width: 768px)") ? "none" : "inherit"
-        }`,
-      }}
+    <Box
+      display={`${
+        mobileOnly && useMediaQuery("(min-width: 768px)") ? "none" : "inherit"
+      }`}
     >
-      <Box
-        style={{
-          width: "100%",
-          display: "flex",
-          justifyContent: "flex-end",
-        }}
+      <Dialog
+        fullWidth
+        maxWidth="md"
+        open={showModal}
+        onClose={onClose}
+        data-testid={id}
       >
-        <Button variant="outlined" color="primary" onClick={onClose}>
-          ✖
-        </Button>
-      </Box>
-      <DialogTitle align="center" fontWeight={600}>
-        {heading}
-      </DialogTitle>
-      <DialogContent
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        {children}
-      </DialogContent>
-    </Dialog>
+        <Box width="100%" display="flex" justifyContent="flex-end">
+          <Button variant="outlined" color="primary" onClick={onClose}>
+            ✖
+          </Button>
+        </Box>
+        <DialogTitle align="center" fontWeight={600}>
+          {heading}
+        </DialogTitle>
+        <DialogContent>{children}</DialogContent>
+      </Dialog>
+    </Box>
   );
 };
 

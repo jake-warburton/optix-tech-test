@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
-import { LoadingState } from "../constants";
+import { LOADING_STATE } from "../constants";
 import { Movie } from "../commonInterfaces";
 import Counter from "../components/elements/counter";
 import Button from "../components/elements/button";
@@ -19,7 +19,7 @@ import ErrorFeedback from "../components/movieComponents/errorFeedback";
 import ReviewForm from "../components/movieComponents/reviewForm";
 
 interface PageProps {
-  loadingState: LoadingState;
+  loadingState: LOADING_STATE;
   movies: Movie[];
   refreshData: () => void;
 }
@@ -32,14 +32,7 @@ const Page: React.FC<PageProps> = ({ loadingState, movies, refreshData }) => {
       <header>
         <h2>Welcome to Movie database!</h2>
 
-        <Box
-          style={{
-            width: "100%",
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
+        <Box display="flex" justifyContent="space-between" alignItems="center">
           <Counter
             count={movies.length}
             title="movies"
@@ -48,7 +41,7 @@ const Page: React.FC<PageProps> = ({ loadingState, movies, refreshData }) => {
 
           <Button
             variant="contained"
-            disabled={loadingState === LoadingState.Loading}
+            disabled={loadingState === LOADING_STATE.Loading}
             onClick={() => {
               setSelectedMovieId(-1);
               refreshData();
@@ -61,14 +54,12 @@ const Page: React.FC<PageProps> = ({ loadingState, movies, refreshData }) => {
 
       <main>
         <Box
-          style={{
-            paddingTop: "1em",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
+          width="100%"
+          display="flex"
+          justifyContent="center"
+          paddingTop="2em"
         >
-          {loadingState === LoadingState.Loading ? (
+          {loadingState === LOADING_STATE.Loading ? (
             <CircularProgress data-testid="loading-icon" />
           ) : movies.length < 1 ? (
             <ErrorFeedback loadingState={loadingState} />
@@ -83,11 +74,7 @@ const Page: React.FC<PageProps> = ({ loadingState, movies, refreshData }) => {
 
         {useMediaQuery("(min-width: 768px)") ? (
           <Fade in={selectedMovieId > -1}>
-            <Container
-              style={{
-                margin: "20px 0px 0px",
-              }}
-            >
+            <Box paddingTop="20px">
               <Card variant="outlined">
                 <CardContent>
                   <ReviewForm
@@ -97,7 +84,7 @@ const Page: React.FC<PageProps> = ({ loadingState, movies, refreshData }) => {
                   />
                 </CardContent>
               </Card>
-            </Container>
+            </Box>
           </Fade>
         ) : (
           <Modal

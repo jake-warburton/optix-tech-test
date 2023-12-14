@@ -1,15 +1,15 @@
-import { sortDirections } from "../constants";
+import { SORT_DIRECTIONS } from "../constants";
 
-export const sortByKey = (
-  data: any[],
-  sortKey?: string,
-  sortDirection?: sortDirections
+export const sortByKey = <T>(
+  data: T[],
+  sortKey: keyof T,
+  sortDirection: SORT_DIRECTIONS
 ) => {
-  if (!sortKey || !sortDirection) return data;
+  const sortedData: T[] = [...data];
 
-  const sortedData: any[] = [...data];
-
-  return sortDirection === sortDirections.Descending
-    ? sortedData.sort((a: any, b: any) => (a[sortKey] > b[sortKey] ? -1 : 1))
-    : sortedData.sort((a: any, b: any) => (a[sortKey] < b[sortKey] ? -1 : 1));
+  return sortedData.sort((a, b) => {
+    if (sortDirection === SORT_DIRECTIONS.Descending)
+      return a[sortKey] > b[sortKey] ? -1 : 1;
+    return a[sortKey] < b[sortKey] ? -1 : 1;
+  });
 };

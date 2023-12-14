@@ -1,5 +1,5 @@
 import { sortByKey } from "../../src/utilities/sortByKey";
-import { sortDirections } from "../../src/constants";
+import { SORT_DIRECTIONS } from "../../src/constants";
 
 import { mockMovies } from "../mockData";
 
@@ -10,7 +10,7 @@ describe("When passed a basic unsorted array of data, a key to sort by and the s
     const sortedArray = sortByKey(
       unsortedArray,
       "id",
-      sortDirections.Ascending
+      SORT_DIRECTIONS.Ascending
     );
 
     expect(sortedArray[0].id).toEqual(2);
@@ -20,7 +20,7 @@ describe("When passed a basic unsorted array of data, a key to sort by and the s
 
 describe("When passed an unsorted array of movies, a key to sort by and the sort direction", () => {
   it("returns the array sorted by id and desc", () => {
-    const sortedArray = sortByKey(mockMovies, "id", sortDirections.Descending);
+    const sortedArray = sortByKey(mockMovies, "id", SORT_DIRECTIONS.Descending);
 
     expect(sortedArray[0].id).toEqual("3");
     expect(sortedArray[2].id).toEqual("1");
@@ -30,7 +30,7 @@ describe("When passed an unsorted array of movies, a key to sort by and the sort
     const sortedArray = sortByKey(
       mockMovies,
       "averageScore",
-      sortDirections.Ascending
+      SORT_DIRECTIONS.Ascending
     );
 
     expect(sortedArray[0].id).toEqual("2");
@@ -42,7 +42,7 @@ describe("When passed an unsorted array of movies, a key to sort by and the sort
     const sortedArray = sortByKey(
       mockMovies,
       "filmCompanyName",
-      sortDirections.Descending
+      SORT_DIRECTIONS.Descending
     );
 
     expect(sortedArray[0].id).toEqual("2");
@@ -54,7 +54,7 @@ describe("When passed an unsorted array of movies, a key to sort by and the sort
     const sortedArray = sortByKey(
       mockMovies,
       "title",
-      sortDirections.Ascending
+      SORT_DIRECTIONS.Ascending
     );
 
     expect(sortedArray[0].id).toEqual("1");

@@ -1,16 +1,16 @@
-import { sortDirections } from "../constants";
+import { SORT_DIRECTIONS } from "../constants";
 
 export const getNextSortDirection = (
-  currentDirection: sortDirections | undefined
+  currentDirection: SORT_DIRECTIONS | undefined
 ) => {
   switch (currentDirection) {
-    case sortDirections.Descending:
-      return sortDirections.Ascending;
+    case SORT_DIRECTIONS.Descending:
+      return SORT_DIRECTIONS.Ascending;
 
-    case sortDirections.Ascending:
+    case SORT_DIRECTIONS.Ascending:
       return undefined;
 
     default:
-      return sortDirections.Descending;
+      return SORT_DIRECTIONS.Descending;
   }
 };

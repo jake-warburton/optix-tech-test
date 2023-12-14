@@ -1,29 +1,35 @@
-import { TableHead, TableCell, TableSortLabel, TableRow } from "@mui/material";
+import {
+  TableHead,
+  TableCell,
+  TableSortLabel,
+  TableRow,
+  Typography,
+} from "@mui/material";
 
-import { sortDirections } from "../../../constants";
+import { SORT_DIRECTIONS } from "../../../constants";
 import { getNextSortDirection } from "../../../utilities/getNextSortDirection";
 
-interface HeaderProps {
-  headings: { id: string; displayName: string }[];
-  sortKey?: string;
-  setSortKey: (sortKey: string | undefined) => void;
-  sortDirection?: sortDirections;
-  setSortDirection: (sortDirection: sortDirections | undefined) => void;
+interface HeaderProps<T> {
+  headings: { id: keyof T; displayName: string }[];
+  sortKey?: keyof T;
+  setSortKey: (sortKey: keyof T | undefined) => void;
+  sortDirection?: SORT_DIRECTIONS;
+  setSortDirection: (sortDirection: SORT_DIRECTIONS | undefined) => void;
 }
 
-const Header: React.FC<HeaderProps> = ({
+const Header = <T,>({
   headings,
   sortKey,
   setSortKey,
   sortDirection,
   setSortDirection,
-}) => {
-  const handleClickHeading = (headingId: string) => {
+}: HeaderProps<T>) => {
+  const handleClickHeading = (headingId: keyof T) => {
     if (sortKey !== headingId) {
       setSortKey(headingId);
-      setSortDirection(sortDirections.Descending);
+      setSortDirection(SORT_DIRECTIONS.Descending);
     } else {
-      if (sortDirection === sortDirections.Ascending) setSortKey(undefined);
+      if (sortDirection === SORT_DIRECTIONS.Ascending) setSortKey(undefined);
       setSortDirection(getNextSortDirection(sortDirection));
     }
   };
@@ -37,9 +43,8 @@ const Header: React.FC<HeaderProps> = ({
               active={sortKey === heading.id}
               direction={sortDirection}
               onClick={() => handleClickHeading(heading.id)}
-              style={{ fontWeight: "600" }}
             >
-              {heading.displayName}
+              <Typography fontWeight="600">{heading.displayName}</Typography>
             </TableSortLabel>
           </TableCell>
         ))}

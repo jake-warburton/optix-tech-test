@@ -1,26 +1,27 @@
 import Header from "../../elements/table/header";
-import { sortDirections } from "../../../constants";
+import { SORT_DIRECTIONS } from "../../../constants";
+import { Movie } from "../../../commonInterfaces";
 
 const headings = [
   {
-    id: "title",
+    id: "title" as keyof Movie,
     displayName: "Movie",
   },
   {
-    id: "filmCompanyName",
+    id: "filmCompanyName" as keyof Movie,
     displayName: "Company",
   },
   {
-    id: "averageScore",
+    id: "averageScore" as keyof Movie,
     displayName: "Avg. Rating",
   },
 ];
 
 interface MovieTableHeaderProps {
-  sortKey?: string;
-  setSortKey: (sortKey: string | undefined) => void;
-  sortDirection?: sortDirections | undefined;
-  setSortDirection: (sortDirection: sortDirections | undefined) => void;
+  sortKey?: keyof Movie;
+  setSortKey: (sortKey: keyof Movie | undefined) => void;
+  sortDirection?: SORT_DIRECTIONS | undefined;
+  setSortDirection: (sortDirection: SORT_DIRECTIONS | undefined) => void;
 }
 
 const MovieTableHeader: React.FC<MovieTableHeaderProps> = ({
@@ -30,7 +31,7 @@ const MovieTableHeader: React.FC<MovieTableHeaderProps> = ({
   setSortDirection,
 }) => {
   return (
-    <Header
+    <Header<Movie>
       headings={headings}
       sortKey={sortKey}
       setSortKey={setSortKey}

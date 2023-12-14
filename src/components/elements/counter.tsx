@@ -1,10 +1,10 @@
 import { Chip } from "@mui/material";
-import { LoadingState } from "src/constants";
+import { LOADING_STATE } from "src/constants";
 
 interface CounterProps {
   count: number;
   title: string;
-  loadingState: LoadingState;
+  loadingState: LOADING_STATE;
 }
 
 const Counter: React.FC<CounterProps> = ({ count, title, loadingState }) => (

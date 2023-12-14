@@ -6,8 +6,7 @@ import { fireEvent, render } from "@testing-library/react";
 import "@testing-library/jest-dom";
 
 import Page from "../../src/pages/index";
-import { FetchMoviesFeedback } from "../../src/constants";
-import { LoadingState } from "../../src/constants";
+import { LOADING_STATE, FETCH_MOVIES_FEEDBACK } from "../../src/constants";
 import { mockMovies } from "../mockData";
 
 describe("when passed an array of movies", () => {
@@ -15,7 +14,7 @@ describe("when passed an array of movies", () => {
     const { queryByTestId } = render(
       <Page
         movies={mockMovies}
-        loadingState={LoadingState.Success}
+        loadingState={LOADING_STATE.Success}
         refreshData={() => {}}
       />
     );
@@ -32,7 +31,7 @@ describe("when passed an empty array of movies", () => {
     const { queryByTestId } = render(
       <Page
         movies={[]}
-        loadingState={LoadingState.Success}
+        loadingState={LOADING_STATE.Success}
         refreshData={() => {}}
       />
     );
@@ -40,14 +39,14 @@ describe("when passed an empty array of movies", () => {
     const feedbackMessage = queryByTestId("error-feedback-message");
 
     expect(feedbackMessage).toBeTruthy();
-    expect(feedbackMessage.textContent).toMatch(FetchMoviesFeedback.Empty);
+    expect(feedbackMessage.textContent).toMatch(FETCH_MOVIES_FEEDBACK.Empty);
   });
 
   it("Displays an error message if the API call results in an error", () => {
     const { queryByTestId } = render(
       <Page
         movies={[]}
-        loadingState={LoadingState.Failure}
+        loadingState={LOADING_STATE.Failure}
         refreshData={() => {}}
       />
     );
@@ -55,7 +54,7 @@ describe("when passed an empty array of movies", () => {
     const feedbackMessage = queryByTestId("error-feedback-message");
 
     expect(feedbackMessage).toBeTruthy();
-    expect(feedbackMessage.textContent).toMatch(FetchMoviesFeedback.Failure);
+    expect(feedbackMessage.textContent).toMatch(FETCH_MOVIES_FEEDBACK.Failure);
   });
 });
 
@@ -64,7 +63,7 @@ describe("When the user clicks a row", () => {
     const { queryByTestId } = render(
       <Page
         movies={mockMovies}
-        loadingState={LoadingState.Success}
+        loadingState={LOADING_STATE.Success}
         refreshData={() => {}}
       />
     );
@@ -82,7 +81,7 @@ describe("When the user clicks a row", () => {
     const { queryByTestId } = render(
       <Page
         movies={mockMovies}
-        loadingState={LoadingState.Success}
+        loadingState={LOADING_STATE.Success}
         refreshData={() => {}}
       />
     );

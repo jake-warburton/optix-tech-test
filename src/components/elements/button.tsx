@@ -10,10 +10,7 @@ const Button: React.FC<ButtonProps> = (
     variant={variant}
     color={color}
     onClick={disabled ? () => {} : onClick}
-    style={{
-      opacity: disabled ? "50%" : "100%",
-      cursor: disabled ? "not-allowed" : "pointer",
-    }}
+    disabled={disabled}
     {...props}
   >
     {children}
