@@ -12,6 +12,7 @@ import { postMovieReview } from "../../api/movies";
 import { Movie } from "../../commonInterfaces";
 import { MOVIE_FEEDBACK_REVIEW } from "../../constants";
 import Button from "../elements/button";
+import CircularProgressWithLabel from "../elements/circularProgressWithLabel";
 
 interface ReviewFormProps {
   movie?: Movie;
@@ -86,19 +87,11 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ movie }) => {
             </Box>
           ) : (
             <Box display="flex" alignItems="center" gap={2}>
-              <Typography
-                color={
-                  reviewContent.length > 100
-                    ? "red"
-                    : reviewContent.length > 90
-                    ? "#ca8900"
-                    : reviewContent.length > 1
-                    ? "#63a225"
-                    : "grey"
-                }
-              >
-                {reviewContent.length}/100
-              </Typography>
+              <CircularProgressWithLabel
+                percentageFilled={reviewContent.length}
+                label={`${reviewContent.length}`}
+              />
+
               <Button
                 id="movie-review-submit"
                 color="success"
