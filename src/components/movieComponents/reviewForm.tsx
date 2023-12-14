@@ -1,5 +1,12 @@
 import { useState, useEffect, ChangeEvent } from "react";
-import { Alert, Box, Chip, CircularProgress, TextField } from "@mui/material";
+import {
+  Alert,
+  Box,
+  Chip,
+  CircularProgress,
+  TextField,
+  Typography,
+} from "@mui/material";
 
 import { postMovieReview } from "../../api/movies";
 import { Movie } from "../../commonInterfaces";
@@ -78,14 +85,31 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ movie }) => {
               <CircularProgress />
             </Box>
           ) : (
-            <Button
-              id="movie-review-submit"
-              color="success"
-              disabled={reviewContent.length > 100 || reviewContent.length < 1}
-              onClick={handleSubmit}
-            >
-              Submit review
-            </Button>
+            <Box display="flex" alignItems="center" gap={2}>
+              <Typography
+                color={
+                  reviewContent.length > 100
+                    ? "red"
+                    : reviewContent.length > 90
+                    ? "#ca8900"
+                    : reviewContent.length > 1
+                    ? "#63a225"
+                    : "grey"
+                }
+              >
+                {reviewContent.length}/100
+              </Typography>
+              <Button
+                id="movie-review-submit"
+                color="success"
+                disabled={
+                  reviewContent.length > 100 || reviewContent.length < 1
+                }
+                onClick={handleSubmit}
+              >
+                Submit review
+              </Button>
+            </Box>
           )}
         </Box>
       )}
